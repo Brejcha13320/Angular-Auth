@@ -1,0 +1,39 @@
+<div class="login-container">
+  <div class="login-card animate__animated animate__fadeInDown">
+    <div class="card login-card">
+      <div class="card-header login-card-header">
+        <h3 class="text-center">Recuperar Contraseña</h3>
+      </div>
+      <div class="card-body login-card-body">
+        <form>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+            />
+          </div>
+          <div class="text-center">
+            <app-button
+              [text]="'Continuar'"
+              [clase]="'btn-primary'"
+              [idButton]="'login'"
+              [widthType]="'full'"
+              (clicker)="recovery()"
+            ></app-button>
+            <app-button
+              [text]="'Iniciar Sesión'"
+              [clase]="'btn-primary'"
+              [idButton]="'register'"
+              [widthType]="'full'"
+              (clicker)="login()"
+            ></app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

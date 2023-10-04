@@ -1,0 +1,15 @@
+<ng-container *ngIf="this.widthType === 'normal'; else widthFull">
+  <button type="button" [class]="clase" class="btn" (click)="onEmit()">
+    {{ text }}
+  </button>
+</ng-container>
+<ng-template #widthFull>
+  <button
+    type="button"
+    [class]="clase"
+    class="btn w-100 mt-3"
+    (click)="onEmit()"
+  >
+    {{ text }}
+  </button>
+</ng-template>
