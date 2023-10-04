@@ -1,0 +1,102 @@
+<div class="login-container">
+  <div class="login-card animate__animated animate__fadeInDown">
+    <div class="card login-card">
+      <div class="card-header login-card-header">
+        <h3 class="text-center">Registrarse</h3>
+      </div>
+      <div class="card-body login-card-body">
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': isInvalid('email') }"
+            />
+            <small
+              *ngIf="
+                this.form.get('email')?.hasError('required') &&
+                isInvalid('email')
+              "
+              class="text-danger"
+            >
+              El email es obligatorio
+            </small>
+            <small
+              *ngIf="this.form.get('email')?.hasError('email')"
+              class="text-danger"
+            >
+              El email no es correcto
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              name="nombre"
+              formControlName="name"
+              [ngClass]="{ 'is-invalid': isInvalid('name') }"
+            />
+            <small *ngIf="isInvalid('name')" class="text-danger">
+              El nombre es obligatorio
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              formControlName="password"
+              [ngClass]="{ 'is-invalid': isInvalid('password') }"
+            />
+            <small *ngIf="isInvalid('password')" class="text-danger">
+              La contraseña es obligatoria
+            </small>
+          </div>
+          <div class="mb-3">
+            <label for="repeat-password" class="form-label"
+              >Repetir Contraseña</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="repeat-password"
+              name="repeat-password"
+              formControlName="confirmPassword"
+              [ngClass]="{ 'is-invalid': this.form.hasError('match_password') }"
+            />
+            <small
+              *ngIf="this.form.hasError('match_password')"
+              class="text-danger"
+            >
+              Las contraseña no son iguales
+            </small>
+          </div>
+          <div class="text-center">
+            <app-button
+              [text]="'Registrarse'"
+              [clase]="'btn-primary'"
+              [idButton]="'register'"
+              [widthType]="'full'"
+              (click)="register()"
+            ></app-button>
+            <app-button
+              [text]="'Iniciar Sesión'"
+              [clase]="'btn-primary'"
+              [idButton]="'login'"
+              [widthType]="'full'"
+              (click)="login()"
+            ></app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
