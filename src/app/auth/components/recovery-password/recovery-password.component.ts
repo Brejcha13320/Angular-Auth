@@ -1,35 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { NotifyService } from 'src/app/shared/services/notify.service';
 import { MyValidators } from 'src/app/shared/utils/validators';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-recovery-password',
+  templateUrl: './recovery-password.component.html',
+  styleUrls: ['./recovery-password.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RecoveryPasswordComponent {
+  token = '';
   form!: UntypedFormGroup;
-
-  /**
-   * get para el value del email del formulario
-   */
-  get email() {
-    return this.form.get('email')?.value;
-  }
-
-  /**
-   * get para el value del nombre del formulario
-   */
-  get name() {
-    return this.form.get('name')?.value;
-  }
 
   /**
    * get para el value del password del formulario
@@ -47,10 +34,20 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: UntypedFormBuilder,
     private authService: AuthService,
     private notifyService: NotifyService
-  ) {}
+  ) {
+    this.route.queryParamMap.subscribe((params) => {
+      const token = params.get('token');
+      if (token) {
+        this.token = token;
+      } else {
+        this.redirectTo('/auth/login');
+      }
+    });
+  }
 
   /**
    * Llama la funcion para crear el formulario
@@ -65,8 +62,6 @@ export class RegisterComponent implements OnInit {
   createForm() {
     this.form = this.fb.group(
       {
-        email: ['', [Validators.required, Validators.email]],
-        name: ['', Validators.required],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
       },
@@ -87,9 +82,9 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
-   * Registrar al usuario
+   * Cambiar contraseña
    */
-  register() {
+  changePassword() {
     if (this.form.invalid) {
       console.log(this.form);
       this.form.markAllAsTouched();
@@ -99,21 +94,24 @@ export class RegisterComponent implements OnInit {
         clase: 'danger',
       });
     } else {
-      this.authService
-        .registerAndLogin(this.email, this.password, this.name)
-        .subscribe(
-          (response) => {
-            console.log('response register and login', response);
-            this.router.navigate(['home']);
-          },
-          () => {
-            this.notifyService.open({
-              title: 'Error al Registrarse',
-              message: 'Por favor verifique sus datos',
-              clase: 'danger',
-            });
-          }
-        );
+      this.authService.recoveryPassword(this.token, this.password).subscribe(
+        (response) => {
+          console.log('response register and login', response);
+          this.notifyService.open({
+            title: 'Contraseña Cambiada Exitosamente',
+            message: 'Su contraseña ha sido cambiada de manera exitosa',
+            clase: 'success',
+          });
+          this.redirectTo('/auth/login');
+        },
+        () => {
+          this.notifyService.open({
+            title: 'Error al Cambiar Contraseña',
+            message: 'Por favor verifique sus datos',
+            clase: 'danger',
+          });
+        }
+      );
     }
   }
 

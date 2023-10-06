@@ -60,21 +60,15 @@ export class LoginComponent implements OnInit {
    * llama la funcion de crear formulario
    */
   ngOnInit(): void {
-    this.route.queryParams.subscribe(({ email }) => {
-      if (email) {
-        this.createForm(email);
-      } else {
-        this.createForm(this.localStorageEmail);
-      }
-    });
+    this.createForm();
   }
 
   /**
    * Crea el formulario
    */
-  createForm(email: string) {
+  createForm() {
     this.form = this.fb.group({
-      email: [email, [Validators.required, Validators.email]],
+      email: [this.localStorageEmail, [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
@@ -101,17 +95,32 @@ export class LoginComponent implements OnInit {
         clase: 'danger',
       });
     } else {
-      this.authService.login(this.email, this.password).subscribe((res) => {
-        console.log('res login', res);
-        this.rememberEmailLS();
-      });
+      this.authService.login(this.email, this.password).subscribe(
+        (res) => {
+          console.log('res login', res);
+          this.notifyService.open({
+            title: 'Inicio de Sesión Exitoso',
+            message: 'Datos Correctos',
+            clase: 'success',
+          });
+          this.rememberEmailStorage();
+          this.redirectTo('home');
+        },
+        () => {
+          this.notifyService.open({
+            title: 'Error al Inicial Sesión',
+            message: 'Por favor verifique sus credenciales',
+            clase: 'danger',
+          });
+        }
+      );
     }
   }
 
   /**
    * Guarda el email del usuario en el local storage o lo elimina
    */
-  rememberEmailLS() {
+  rememberEmailStorage() {
     if (this.rememberEmail) {
       localStorage.setItem('email', this.email);
     } else {
