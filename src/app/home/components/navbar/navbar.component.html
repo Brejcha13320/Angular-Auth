@@ -1,0 +1,57 @@
+<div class="container">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+  >
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          height="45"
+          width="35"
+        >
+          <path
+            fill="#000000"
+            fill-rule="evenodd"
+            d="M12 1 1.5 4.5l2 14L12 23l8.5 -4.5 2 -14L12 1Zm2.722 13.5 1.27 3h2.17L12 2.934 5.837 17.5H8.01l1.27 -3h5.443ZM12 8.066l1.876 4.434h-3.752L12 8.066Z"
+            clip-rule="evenodd"
+            stroke-width="1"
+          ></path>
+        </svg>
+      </a>
+    </div>
+
+    <ul class="nav nav-pills">
+      <li *ngFor="let option of options" class="nav-item">
+        <a
+          routerLinkActive="active"
+          [routerLink]="option.router"
+          class="nav-link"
+          aria-current="page"
+          >{{ option.title }}</a
+        >
+      </li>
+    </ul>
+
+    <div *ngIf="user$ | async as user" class="col-md-3 text-end">
+      <div ngbDropdown class="d-inline-block">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="dropdownBasic1"
+          ngbDropdownToggle
+        >
+          {{ user.name }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>Action - 1</button>
+          <button ngbDropdownItem>Another Action</button>
+          <button ngbDropdownItem (click)="logout()">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="b-example-divider"></div>

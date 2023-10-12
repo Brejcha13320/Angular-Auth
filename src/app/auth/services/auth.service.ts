@@ -1,22 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Login, Recovery, Register } from '@interfaces/auth';
-import { Observable, switchMap } from 'rxjs';
+import { Login, Profile, Recovery, Register, UserData } from '@interfaces/auth';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   apiUrl = environment.apiBaseUrl;
+  user$ = new BehaviorSubject<UserData | null>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   login(email: string, password: string): Observable<Login> {
-    return this.http.post<Login>(`${this.apiUrl}/auth/login`, {
-      email,
-      password,
-    });
+    return this.http
+      .post<Login>(`${this.apiUrl}/auth/login`, {
+        email,
+        password,
+      })
+      .pipe(
+        tap((data: Login) => {
+          this.tokenService.saveToken(data.data.token);
+        })
+      );
   }
 
   register(
@@ -52,5 +60,24 @@ export class AuthService {
       token,
       password,
     });
+  }
+
+  getProfile(): Observable<Profile> {
+    const token = this.tokenService.getToken();
+    return this.http
+      .get<Profile>(`${this.apiUrl}/auth/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .pipe(
+        tap(({ data }) => {
+          this.user$.next(data);
+        })
+      );
+  }
+
+  logout() {
+    this.tokenService.removeToken();
   }
 }
