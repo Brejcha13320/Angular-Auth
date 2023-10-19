@@ -5,7 +5,6 @@ export interface Login {
 
 export interface Tokens {
   token: string;
-  refresh_token: string;
 }
 
 export interface Register {
