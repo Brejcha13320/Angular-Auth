@@ -96,8 +96,7 @@ export class LoginComponent implements OnInit {
       });
     } else {
       this.authService.login(this.email, this.password).subscribe(
-        (res) => {
-          console.log('res login', res);
+        () => {
           this.notifyService.open({
             title: 'Inicio de Sesión Exitoso',
             message: 'Datos Correctos',

@@ -5,7 +5,6 @@ export interface Login {
 
 export interface Tokens {
   token: string;
-  refresh_token: string;
 }
 
 export interface Register {
@@ -17,6 +16,8 @@ export interface UserData {
   id: string;
   email: string;
   name: string;
+  image: string;
+  descripcion: string;
 }
 
 export interface Recovery {
@@ -28,4 +29,9 @@ export interface RecoveryData {
   from: string;
   to: string;
   message: string;
+}
+
+export interface Profile {
+  success: boolean;
+  data: UserData;
 }
