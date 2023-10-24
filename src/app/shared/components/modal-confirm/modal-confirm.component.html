@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title">Confirmar Acción</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="clickEvents('close')"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>¿Estas seguro que desear realizar esta acción?</p>
+</div>
+<div class="modal-footer">
+  <app-button
+    type="button"
+    [idButton]="'confirm'"
+    [clase]="'btn-success'"
+    [text]="'Confirmar'"
+    (clicker)="clickEvents($event)"
+  ></app-button>
+  <app-button
+    type="button"
+    [idButton]="'cancel'"
+    [clase]="'btn-danger'"
+    [text]="'Cancelar'"
+    (clicker)="clickEvents($event)"
+  ></app-button>
+</div>

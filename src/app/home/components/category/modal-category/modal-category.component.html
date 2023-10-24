@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title">Crear Categoria</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="clickEvents('close')"
+  ></button>
+</div>
+<div class="modal-body pb-5" [formGroup]="form">
+  <div class="d-flex justify-content-center mt-3 mb-3">
+    <h5>Formulario de Categoria</h5>
+  </div>
+
+  <div class="input-group mb-3">
+    <span class="input-group-text">Nombre</span>
+    <input
+      type="text"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': isInvalid('name') }"
+      placeholder="Escriba la categoria"
+      formControlName="name"
+    />
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-text">Descripción</span>
+    <textarea
+      class="form-control"
+      placeholder="Escriba la descripción"
+      formControlName="description"
+      maxlength="250"
+    ></textarea>
+  </div>
+  <label class="text-sm text-secondary"
+    >Caracteres {{ description.length }} de 250</label
+  >
+</div>
+<div class="modal-footer">
+  <ng-container *ngIf="idCategory; else create">
+    <app-button
+      type="button"
+      [idButton]="'update'"
+      [text]="'Actualizar'"
+      (clicker)="clickEvents($event)"
+    ></app-button>
+  </ng-container>
+  <ng-template #create>
+    <app-button
+      type="button"
+      [idButton]="'create'"
+      [text]="'Crear'"
+      (clicker)="clickEvents($event)"
+    ></app-button>
+  </ng-template>
+  <app-button
+    type="button"
+    [idButton]="'cancel'"
+    [clase]="'btn-danger'"
+    [text]="'Cancelar'"
+    (clicker)="clickEvents($event)"
+  ></app-button>
+</div>

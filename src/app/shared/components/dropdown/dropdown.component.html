@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col">
+    <div ngbDropdown #myDropdown="ngbDropdown" class="d-inline-block">
+      <button
+        type="button"
+        class="btn"
+        [class]="clase"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        <ng-container *ngIf="title">
+          {{ title }}
+        </ng-container>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button
+          ngbDropdownItem
+          *ngFor="let dropdownButton of dropdownButtons"
+          (click)="onClick(dropdownButton.idButton)"
+        >
+          {{ dropdownButton.text }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

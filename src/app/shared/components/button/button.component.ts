@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ClaseButton } from '@interfaces/clase-button';
 
 @Component({
   selector: 'app-button',
@@ -19,15 +20,7 @@ export class ButtonComponent {
   /**
    * String con la clase de Bootstrap
    */
-  @Input() clase:
-    | 'btn-primary'
-    | 'btn-secondary'
-    | 'btn-success'
-    | 'btn-danger'
-    | 'btn-warning'
-    | 'btn-info'
-    | 'btn-light'
-    | 'btn-dark' = 'btn-primary';
+  @Input() clase: ClaseButton = 'btn-primary';
 
   /**
    * Esta variable define si el boton va con un width del 100% o auto segun el texto
