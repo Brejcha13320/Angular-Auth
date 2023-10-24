@@ -34,7 +34,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return this.addToken(request, next).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log('error del addToken', error);
         if (error.status === 401 && error.error.error == 'Token no valido') {
           this.authService.logout();
         }

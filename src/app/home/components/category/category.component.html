@@ -1,2 +1,51 @@
 <app-title [title]="title" [subtitle]="subtitle"></app-title>
-<p>category works!</p>
+
+<div class="mt-5">
+  <div class="d-flex justify-content-between pt-4 pb-4">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label class="col-form-label">Buscar Categoria</label>
+      </div>
+      <div class="col-auto">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Escribe la Categoria"
+          [formControl]="search"
+        />
+      </div>
+    </div>
+    <div>
+      <app-button
+        [idButton]="'crear-categoria'"
+        [text]="'Crear Categoria'"
+        (clicker)="modalCategory()"
+      >
+      </app-button>
+    </div>
+  </div>
+  <app-table-category
+    [term]="term"
+    [categories]="categories$ | async"
+    [dropdownButtons]="dropdownButtons"
+    (clicker)="clickEvents($event)"
+  ></app-table-category>
+</div>
+
+<ng-container [ngSwitch]="this.status">
+  <ng-container *ngSwitchCase="'success'"> </ng-container>
+  <ng-container *ngSwitchCase="'loading'">
+    <app-alert
+      [type]="'info'"
+      [title]="'Consultando Información'"
+      [text]="'Estamos buscando tus categorias, espera un momento...'"
+    ></app-alert>
+  </ng-container>
+  <ng-container *ngSwitchCase="'error'">
+    <app-alert
+      [type]="'danger'"
+      [title]="'Problemas al buscar las categorias'"
+      [text]="'Se han presentado problemas a la hora de cargar las categorias'"
+    ></app-alert>
+  </ng-container>
+</ng-container>

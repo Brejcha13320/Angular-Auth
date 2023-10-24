@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { ListComponent } from './components/list/list.component';
 import { CategoryComponent } from './components/category/category.component';
 import { UsersComponent } from './components/users/users.component';
 import { AboutComponent } from './components/about/about.component';
+import { TaskComponent } from './components/task/task.component';
 
 const routes: Routes = [
   {
@@ -13,12 +13,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'list',
+        redirectTo: 'task',
         pathMatch: 'full',
       },
       {
-        path: 'list',
-        component: ListComponent,
+        path: 'task',
+        component: TaskComponent,
       },
       {
         path: 'category',

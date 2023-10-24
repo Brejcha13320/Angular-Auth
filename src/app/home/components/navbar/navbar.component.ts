@@ -18,8 +18,8 @@ export class NavbarComponent implements OnInit {
 
   options: Options[] = [
     {
-      title: 'Lista',
-      router: 'list',
+      title: 'Tareas',
+      router: 'task',
     },
     {
       title: 'Categorias',

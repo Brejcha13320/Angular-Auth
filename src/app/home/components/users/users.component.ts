@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
 export class UsersComponent {
   title = 'TABLA DE USUARIOS';
   subtitle =
-    'En esta sección de usuarios puedes visualizar todos los usuarios registrados, tambien puedes realizar acciones como filtrar y ver el detalle';
+    'En esta sección puedes visualizar todos los usuarios registrados, tambien puedes realizar acciones como filtrar y ver el detalle';
 }
